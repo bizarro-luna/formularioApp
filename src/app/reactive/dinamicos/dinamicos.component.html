@@ -1,0 +1,68 @@
+<h2>Reactivo: Dinámicos</h2>
+<hr>
+
+<form (ngSubmit)="guardar()" autocomplete="off" [formGroup]="miFormulario">
+
+
+    <!--Div nombre-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+            <input class="form-control" formControlName="nombre" placeholder="Nombre de la persona">
+
+            <span class="form-text text-danger" *ngIf="campoValidar('nombre')">
+                Este campo debe ser obligatorio
+            </span>
+        </div>
+    </div>
+
+    <!--Div Agregar favorito-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9">
+
+            <div class="input-group">
+                <input [formControl]="nuevoFavorito" class="form-control" (keyup.enter)="agregarFavorito()" placeholder="Agregar favorito">
+                <button type="button" class="btn btn-outline-primary" (click)="agregarFavorito()">
+                    Agregar
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!--Div lista de juegos favoritos-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+
+        <div class="col-sm-9" formArrayName="favoritos">
+
+            <div class="input-group mb-1" *ngFor="let favorito of favoritosArr.controls; let i = index">
+                <input class="form-control" [formControlName]="i">
+                <button type="button" class="btn btn-outline-danger" (click)="borrar(i)">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mb-3 row">
+        <div class="col-sm-12">
+            <button type="submit" (click)="guardar()" class='btn btn-primary float-end'>Guardar</button>
+        </div>
+    </div>
+
+</form>
+
+<span>valid </span>
+<pre>{{miFormulario.valid}}</pre>
+<br>
+<span>valor </span>
+<pre>{{miFormulario.value | json}}</pre>
+<br>
+
+<span>Agregar juego </span>
+<pre>{{nuevoFavorito.valid | json}}</pre>
+<pre>{{nuevoFavorito.value}}</pre>

@@ -1,0 +1,59 @@
+<h2>Template: Dinámicos</h2>
+<hr>
+
+<form (ngSubmit)="guardar()" autocomplete="off" #miFormulario="ngForm">
+
+
+    <!--Div nombre-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+            <input class="form-control" [ngModel]="persona.nombre" name="nombre" placeholder="Nombre de la persona" required>
+
+            <span class="form-text text-danger" *ngIf="miFormulario.controls.nombre?.errors &&  miFormulario.controls.nombre?.touched">
+                Este campo debe ser obligatorio
+            </span>
+        </div>
+    </div>
+
+    <!--Div Agregar favorito-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9">
+
+            <div class="input-group">
+                <input [(ngModel)]="nuevoJuego" name="nuevoJuego" (keyup.enter)="agregarJuego()" class="form-control" placeholder="Agregar favorito">
+                <button type="button" (click)="agregarJuego()" class="btn btn-outline-primary">
+                    Agregar
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!--Div lista de juegos favoritos-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+        <div class="col-sm-9">
+
+            <div class="input-group mb-1" *ngFor="let juego of persona.favoritos; let i=index">
+                <input class="form-control" [(ngModel)]="juego.nombre" name="favorito_{{i}}" required>
+                <button type="button" class="btn btn-outline-danger" (click)="eliminar(i)">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mb-3 row">
+        <div class="col-sm-12">
+            <button type="button" (click)="guardar()" [disabled]="miFormulario.invalid" class='btn btn-primary float-end'>Guardar</button>
+        </div>
+    </div>
+
+</form>
+
+<span>Persona</span>
+<pre>{{persona | json}}</pre>
